@@ -1,0 +1,362 @@
+/* FONTS */
+/* ------------------------------------- */
+/* LIGHT */
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Lt.otf') format('opentype');
+    font-weight: 1;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Lt\ It.otf') format('opentype');
+    font-weight: 1;
+    font-style: italic;
+}
+
+/* REGULAR */
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Rg.otf') format('opentype');
+    font-weight: 2;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Rg\ It.otf') format('opentype');
+    font-weight: 2;
+    font-style: italic;
+}
+
+/* SEMI BOLD */
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Sb.otf') format('opentype');
+    font-weight: 3;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Sb\ It.otf') format('opentype');
+    font-weight: 3;
+    font-style: italic;
+}
+
+/* BOLD */
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Bd.otf') format('opentype');
+    font-weight: 4;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Bd\ It.otf') format('opentype');
+    font-weight: 4;
+    font-style: italic;
+}
+
+/* EXTRA BOLD */
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57 Monospace Sc Eb.otf') format('opentype');
+    font-weight: 5;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NK57-Monospace';
+    src: url('fonts/NK57\ Monospace\ Sc\ Eb\ It.otf') format('opentype');
+    font-weight: 5;
+    font-style: italic;
+}
+
+
+/* COLOUR SCHEME */
+/* ------------------------------------- */
+:root {
+    --primary-colour: #aae1ec;
+    --secondary-colour: #55bbec;
+    --trinary-colour: #5588ec;
+    --alt-primary-colour: #aaece1;
+    --alt-secondary-colour: #55ecbbff;
+    --alt-trinary-colour: #55ec88;
+    --bg-one: #202020;
+    --bg-two: #303030;
+    --bg-thr: #404040;
+    --bg-fou: #505050;
+    --bg-fiv: #606060;
+    --alt-bg-one: #eeeeee;
+    --alt-bg-two: #dddddd;
+    --alt-bg-thr: #cccccc;
+    --alt-bg-fou: #bbbbbb;
+    --alt-bg-fiv: #aaaaaa;
+    --extra-one: #cc8833;
+    --extra-two: #cc88ee;
+    --extra-thr: #dd3388;
+    --extra-fou: #ee1133;
+    --alt-extra-one: #cc9955;
+    --alt-extra-two: #ccaaee;
+    --alt-extra-thr: #dd6688;
+    --alt-extra-fiv: #ee3344;
+    --blank: #ffffff00;
+}
+
+[data-theme="dark"] {
+    --primary-colour:  #5588ec;
+    --secondary-colour: #55bbec;
+    --trinary-colour: #aae1ec;
+    --alt-primary-colour: #55ec88;
+    --alt-secondary-colour: #55ecbbff;
+    --alt-trinary-colour: #aaece1;
+    --alt-bg-one: #202020;
+    --alt-bg-two: #303030;
+    --alt-bg-thr: #404040;
+    --alt-bg-fou: #505050;
+    --alt-bg-fiv: #606060;
+    --bg-one: #eeeeee;
+    --bg-two: #dddddd;
+    --bg-thr: #cccccc;
+    --bg-fou: #bbbbbb;
+    --bg-fiv: #aaaaaa;
+    --alt-extra-one: #cc8833;
+    --alt-extra-two: #cc88ee;
+    --alt-extra-thr: #dd3388;
+    --alt-extra-fou: #ee1133;
+    --extra-one: #cc9955;
+    --extra-two: #ccaaee;
+    --extra-thr: #dd6688;
+    --extra-fiv: #ee3344;
+    --blank: #ffffff00;
+}
+
+
+/* STYLE */
+/* ------------------------------------- */
+/* Header */
+body {
+    /* colours */
+    color: var(--bg-one);
+    background-color: var(--alt-bg-one);
+    /* font */
+    font-family: 'NK57-Monospace', monospace;
+    font-weight: 1;
+    /* position */
+    margin: 0px;
+    padding: 0rem 0rem 0rem 0rem;
+    /* transition */
+    transition: all 0.2s ease;
+}
+
+.top-bar {
+    /* colours */
+    color: var(--bg-one);
+    background-color: var(--secondary-colour);
+    box-shadow: 0px 2px 8px var(--bg-fou);
+    /* positions */
+    position: sticky;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 1rem 1rem; /* Top | Right | Bottom | Left */
+    /* transitions */
+    transition: all 0.2s ease;
+}
+
+.top-bar-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.site-title {
+    font-family: 'NK57-Monospace', monospace;
+    font-weight: 5;
+    font-size: 2rem;
+
+    color: var(--primary-colour);
+    background-color: var(--blank);
+    
+    transition: all 0.2s ease;
+}
+
+.bar-button {
+    font-family: 'NK57-Monospace', monospace;
+    font-weight: 2;
+    font-size: 0.875rem;
+
+    color: var(--bg-one);
+    background-color: var(--blank);
+    border: 1px solid var(--bg-fiv);
+
+    display: inline-block;
+    text-decoration: none;
+
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.bar-button:hover {
+    background-color: var(--bg-fiv);
+}
+
+/* Body */
+h1 {
+    color: var(--secondary-colour);
+
+    font-size: 2rem;
+    font-weight: 5;
+
+    padding: 0rem 0rem 0rem 0rem;
+}
+
+h2 {
+    color: var(--secondary-colour);
+    
+    font-size: 1.5rem;
+    font-weight: 4;
+
+    border-bottom: 1px solid var(--secondary-colour);
+    padding: 0rem 0rem 0rem 0rem;
+}
+
+h3 {
+    color: var(--secondary-colour);
+
+    font-size: 1.5rem;
+    font-weight: 4;
+
+    padding: 0rem 0rem 0rem 0rem;
+}
+
+h4 {
+    color: var(--secondary-colour);
+
+    font-size: 1.25rem;
+    font-weight: 3;
+
+    
+    padding: 0rem 0rem 0rem 0rem;
+}
+
+h5 {
+    color: var(--trinary-colour);
+
+    font-size: 1.25rem;
+    font-weight: 3;
+
+    padding: 0rem 0rem 0rem 0rem;
+}
+
+h6 {
+    color: var(--trinary-colour);
+
+    font-size: 1.25rem;
+    font-weight: 2;
+    
+    padding: 0rem 0rem 0rem 0rem;
+}
+
+p {
+    color: var(--bg-one);
+
+    font-weight: 1;
+
+    padding: 0rem 0rem 0rem 0rem;
+}
+
+ul {
+    color: var(--bg-one);
+
+    font-weight: 2;
+
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+li {
+    color: var(--bg-one);
+
+    font-weight: 2;
+
+    margin-left: 1rem;
+}
+
+/* Style changes */
+
+.indent {
+    background-color: var(--alt-bg-one);
+
+    border-radius: 2px;
+    padding: 0rem 1rem 0rem 1rem;
+
+    transition: all 0.2s ease;
+}
+
+.info-text {
+    color: var(--bg-thr);
+    
+    font-weight: 1;
+}
+
+.inline-code {
+    color: var(--bg-thr);
+    background-color: var(--alt-bg-thr);
+
+    font-weight: 1;
+}
+
+.code-block {
+    color: var(--bg-thr);
+    background-color: var(--alt-bg-thr);
+
+    margin: 1rem;
+    font-weight: 1;
+}
+
+.quotes {
+    font-family: 'NK57-Monospace', monospace;
+    font-style: italic;
+    font-weight: 1;
+
+    color: var(--bg-fiv);
+    margin: 1rem;
+}
+
+.text-bold {
+    font-weight: 5;
+}
+
+.link-button {
+    font-family: 'NK57-Monospace', monospace;
+    font-weight: 2;
+    font-size: 1rem;
+
+    color: var(--bg-one);
+    border: 1px solid var(--alt-bg-thr);
+
+    display: inline-block;
+    text-decoration: none;
+
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.link-button:hover {
+    color: var(--secondary-colour);
+    background-color: var(--alt-bg-one);
+}
+
+.img {
+    max-width: 100%;
+    height: auto;
+    display: flow-root;
+    border-radius: 8px;
+}
