@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sour Documentation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="site-title">Michael Wallis - Sour</div>
+        <div class="top-bar-controls">
+            <a href="https://mwallis45.github.io/My-Portfolio/" class="bar-button">
+                Main Page
+            </a>
+
+            <button id="theme-toggle" class="bar-button" aria-label="Toggle Dark and Light Mode">
+                Dark Mode
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="indent">
+            <h1>Sour Documentation</h1>
+            <div class="indent">
+                <p class="info-text">Maintained by Michael Wallis</p>
+            </div>
+
+            <h2>Overview</h2>
+            <div class="indent">
+                <p>Sour (Sound to Colour) is a python library aim at being able to convert the audio formats to image formats.</p>
+                <p>Current Status: v1.0</p>
+            </div>
+
+            <h2>Quick Links</h2>
+            <ul>
+                <li>Source Code on <a href="https://github.com/mwallis45/Sour-Python-Library" style="color: var(--alt-secondary-colour);">GitHub</a></li>
+            </ul>
+
+            <h2>Information</h2>
+            <div class="indent">
+                <p>Sour is aimed at converting audio to images and images to audio. This can be used to perform compression but also hide audio as images.</p>
+                <p>Audio can be understood at a string of 24 bits every sample. Using a standard RGB value of 0-255 we can get a single pixel of RGB from one sample of audio. For different bit depths, the audio is cut into 24 bits with extra sample audio contained.</p>
+                <p>`.sour` format includes a header pixel which contians the information of the audio to help convert back into the correct format.</p>
+            </div>
+
+            <h2>Citation & Licensing</h2>
+            <div class="indent">
+                <p>This project's code is licensed under the MIT License.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
