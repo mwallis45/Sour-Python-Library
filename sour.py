@@ -749,7 +749,7 @@ class Sour():
         final_name = pathlib.Path(final_name)
         save_format = "PNG" if file_type.lower() == ".sour" else "PNG"
         if sour_png:
-            final_name_sour = f"{final_name.stem}.sour"
+            final_name_sour = str(final_name.with_suffix(".sour"))
             img.save(final_name_sour, format="PNG")
         img.save(str(final_name), format=save_format)
         if verbose:
@@ -836,8 +836,7 @@ class Sour():
             data_pixels = img_array
             self.find_image_path_format(file_path.name, meta_data=meta_data, verbose=verbose, print_space=print_space + " ")
 
-        header = 1 if file_path.suffix.lower() == ".sour" else 0
-        self.audio_duration = ((len(data_pixels)-header) * 3) / ((self.audio_bit_depth // 8) * self.audio_channels * self.audio_sample_rate)
+        self.audio_duration = (len(data_pixels) * 3) / ((self.audio_bit_depth // 8) * self.audio_channels * self.audio_sample_rate)
         self.image_stream = data_pixels
 
         if verbose:
@@ -880,6 +879,9 @@ class Sour():
         else:
             audio = (raw_bytes.astype(np.float32) / 255.0 * 2.0) - 1.0
 
+        if self.audio_channels > 1:
+            audio = audio.reshape(self.audio_channels, -1).T
+            
         self.audio_stream = audio
 
         if verbose:
@@ -925,10 +927,7 @@ class Sour():
         expected_samples = int(self.audio_sample_rate * self.audio_duration)
         self.audio_stream = self.audio_stream[:expected_samples]
 
-        if save_as != "":
-            final_name = f"{save_as}{file_format}"
-        else:
-            final_name = f"{p.stem}{file_format}"
+        final_name = f"{save_as if save_as != "" else p.stem}{file_format}"
 
         sf.write(final_name, self.audio_stream, int(self.audio_sample_rate)) # type: ignore
         if verbose:
