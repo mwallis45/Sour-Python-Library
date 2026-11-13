@@ -255,16 +255,20 @@ class Sour():
     # +--------------------------------------------------------------------+
     # | SOUR FORMAT                                                        |
     # +--------------------------------------------------------------------+
-    def pixel_data_encoder(self, verbose: bool = False, print_space: str = "") -> np.ndarray:
+    def pixel_data_encoder(
+        self,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> np.ndarray:
         '''
-        Docstring for pixel_data_encoder
+        Encodes the audio data into the header pixel.
 
-        :param self: Description
-        :param verbose: Description
+        :param self: Object
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
-        :return: Description
+        :return: Formatted header pixel data [R, G, B] uint8
         :rtype: ndarray[_AnyShape, dtype[Any]]
         '''
         idx_sr = self.formats["sample_rates"].index(str(int(self.audio_sample_rate)))
@@ -287,16 +291,21 @@ class Sour():
         return np.array([red, green, blue], dtype=np.uint8)
     
 
-    def pixel_data_decoder(self, pixel: np.ndarray, verbose: bool = False, print_space: str = "") -> None:
+    def pixel_data_decoder(
+        self,
+        pixel: np.ndarray,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for pixel_data_decoder
+        Decodes header pixel into audio information.
 
-        :param self: Description
-        :param pixel: Description
+        :param self: Object
+        :param pixel: Header pixel to be decoded [R, G, B] uint8
         :type pixel: np.ndarray
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         red, green, blue = map(int, pixel[:3])
@@ -324,18 +333,24 @@ class Sour():
     # +--------------------------------------------------------------------+
     # | ATRIBUTE LOADERS                                                   |
     # +--------------------------------------------------------------------+
-    def find_audio_info(self, file_path: str | Path, mono: bool = True, verbose: bool = False, print_space: str = "") -> None:
+    def find_audio_info(
+        self,
+        file_path: str | Path,
+        mono: bool = True,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for find_audio_info
+        Gets basic audio information from file path
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Audio file path
         :type file_path: str | Path
-        :param mono: Description
+        :param mono: Toggle for mono audio
         :type mono: bool
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         self.audio_stream, self.audio_sample_rate = librosa.load(file_path, sr=None, mono=mono)
@@ -348,16 +363,21 @@ class Sour():
             print(f"{print_space} Duration of Audio Loaded")
 
 
-    def find_bit_depth(self, file_path: str | Path, verbose: bool = False, print_space: str = "") -> None:
+    def find_bit_depth(
+        self,
+        file_path: str | Path,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for find_bit_depth
+        Finds the bit depth for mp3 files
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Audio file path
         :type file_path: str | Path
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         sf_info = sf.info(file_path) # type: ignore
@@ -380,18 +400,24 @@ class Sour():
             print(f"{print_space} Bit Rate Loaded")
 
 
-    def find_image_path_format(self, file_path_name: str, meta_data: list[str] = [], verbose: bool = False, print_space: str = "") -> None:
+    def find_image_path_format(
+        self,
+        file_path_name: str,
+        meta_data: list[str] = [],
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for find_image_path_format
+        Provides metadata for image files for audio conversion.
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Image file path
         :type file_path: str
-        :param meta_data: Description
+        :param meta_data: metadata list for audio conversion
         :type meta_data: list[str]
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         if len(meta_data) != 4:
@@ -443,21 +469,22 @@ class Sour():
         return [n for n in range(1, num + 1) if num % n == 0]   
 
 
-    def grid_size(self, override: int = 0,
-                  verbose: bool = False,
-                  print_space: str = ""
-                  ) -> tuple[int, int]:
+    def grid_size(self,
+        override: int = 0,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> tuple[int, int]:
         '''
-        Docstring for grid_size
+        Generates the hight and width best suited for the audio length
 
-        :param self: Description
-        :param override: Description
+        :param self: Object
+        :param override: Set a specific length
         :type override: int
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
-        :return: Description
+        :return: width and hight of image output
         :rtype: tuple[int, int]
         '''
         total_pixels = override if override != 0 else len(self.image_stream)
@@ -491,31 +518,36 @@ class Sour():
     # +--------------------------------------------------------------------+
     # | IMAGE AVARAGING                                                    |
     # +--------------------------------------------------------------------+
-    def reduce_image(self,
-                     file_path: Path,
-                     style: str = "SLICE",
-                     chunk_size: int = 1,
-                     percentage: float = 0.0,
-                     full_resize: bool = False,
-                     max_size: int = 0,
-                     verbose: bool = False,
-                     print_space: str = ""
-                     ) -> None:
+    def reduce_image(
+        self,
+        file_path: Path,
+        style: str = "SLICE",
+        chunk_size: int = 1,
+        percentage: float = 0.0,
+        full_resize: bool = False,
+        max_size: int = 0,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for reduce_image
+        Reduces image size by chunks, percentage or a max size
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Image file path
         :type file_path: str
-        :param style: Description
+        :param style: Chunking style selection [SLICE, AVG]
         :type style: str
-        :param chunk_size: Description
+        :param chunk_size: Selects how large the chunks are
         :type chunk_size: int
-        :param percentage: Description
+        :param percentage: If used, reduces the image by percentage amount
         :type percentage: float
-        :param verbose: Description
+        :param full_resize: Makes the chunk size fit the full image into max_size
+        :type full_resize: bool
+        :param max_size: Hard limit of the image size
+        :type max_size: int
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         if not self.valid_file_path(file_path):
@@ -567,23 +599,24 @@ class Sour():
     # +--------------------------------------------------------------------+
     # | AUDIO TO IMAGE                                                     |
     # +--------------------------------------------------------------------+
-    def load_audio(self,
-                   file_path: Path,
-                   mono: bool = False,
-                   verbose: bool = False,
-                   print_space: str = ""
-                   ) -> None:
+    def load_audio(
+        self,
+        file_path: Path,
+        mono: bool = False,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for load_audio
+        Loads audio information into the sour object.
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Audio file path
         :type file_path: str
-        :param mono: Description
+        :param mono: Load audio into mono
         :type mono: bool
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         if verbose:
@@ -610,23 +643,24 @@ class Sour():
             return
 
 
-    def gen_image(self,
-                  file_path: Path,
-                  mono: bool = False,
-                  verbose: bool = False,
-                  print_space: str = ""
-                  ) -> None:
+    def gen_image(
+        self,
+        file_path: Path,
+        mono: bool = False,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
         Docstring for gen_image
 
-        :param self: Description
+        :param self: Object
         :param file_path: Description
         :type file_path: str
         :param mono: Description
         :type mono: bool
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         if not self.valid_audio():
@@ -660,38 +694,39 @@ class Sour():
             print(f"{print_space} Image created. Total Pixels: {len(self.image_stream)}")
 
 
-    def save_image(self,
-            file_path: str | Path,
-            mono: bool = False,
-            save_as: str | Path = "",
-            file_type: str = ".png",
-            max_size: int = 0,
-            sour_png: bool = False,
-            fill: bool = False,
-            verbose: bool = False,
-            print_space: str = ""
-        ) -> None:
+    def save_image(
+        self,
+        file_path: str | Path,
+        mono: bool = False,
+        save_as: str | Path = "",
+        file_type: str = ".png",
+        max_size: int = 0,
+        sour_png: bool = False,
+        fill: bool = False,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
         Docstring for save_image
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Audio file path
         :type file_path: str | path
-        :param mono: Description
+        :param mono: Audio to be loaded as mono
         :type mono: bool
-        :param save_as: Description
+        :param save_as: Image file path to save to
         :type save_as: str | Path
-        :param file_type: Description
+        :param file_type: Image file type to save
         :type file_type: str
-        :param max_size: Description
+        :param max_size: Hard limit of image size
         :type max_size: int
-        :param sour_png: Description
+        :param sour_png: Creates an addtional image in a png format that contains the sour header pixel
         :type sour_png: bool
-        :param fill: Description
+        :param fill: Adds additonal blank pixels to fill out squares in the image
         :type fill: bool
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         file_path = Path(file_path)
@@ -756,34 +791,49 @@ class Sour():
             print(f"{print_space} Saved {file_type} file: {final_name}\n\n")
 
     
-    def audio_to_image(self, file_path: str | Path, mono: bool = False, max_size: int = 0, save_as: str | Path = "", file_type: str = ".png", sour_png: bool = False, style: str = "SLICE", chunk_size:int = 1, percentage: float = 0.0, full_resize: bool = False, fill: bool = False, verbose: bool = False, print_space: str = "") -> None:
+    def audio_to_image(
+        self,
+        file_path: str | Path,
+        mono: bool = False,
+        max_size: int = 0,
+        save_as: str | Path = "",
+        file_type: str = ".png",
+        sour_png: bool = False,
+        style: str = "SLICE",
+        chunk_size:int = 1,
+        percentage: float = 0.0,
+        full_resize: bool = False,
+        fill: bool = False,
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for audio_to_image
+        Full audio to image pipline
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Audio file path
         :type file_path: str | Path
-        :param mono: Description
+        :param mono: Audio to be loaded as mono
         :type mono: bool
-        :param max_size: Description
+        :param max_size: Hard limit of image size
         :type max_size: int
-        :param save_as: Description
+        :param save_as: Image file path to save to
         :type save_as: str
-        :param file_type: Description
+        :param file_type: Image file type to save
         :type file_type: str
-        :param sour_png: Description
+        :param sour_png: Creates an addtional image in a png format that contains the sour header pixel
         :type sour_png: bool
-        :param style: Description
+        :param style: Chunking style selection [SLICE, AVG]
         :type style: str
-        :param chunk_size: Description
+        :param chunk_size: Selects how large the chunks are
         :type chunk_size: int
-        :param percentage: Description
+        :param percentage: If used, reduces the image by percentage amount
         :type percentage: float
-        :param fill: Description
+        :param fill: Adds additonal blank pixels to fill out squares in the image
         :type fill: bool
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         file_path = Path(file_path)
@@ -800,18 +850,24 @@ class Sour():
     # +--------------------------------------------------------------------+
     # |  IMAGE TO AUDIO                                                    |
     # +--------------------------------------------------------------------+
-    def load_image(self, file_path: Path, meta_data: list[str] = [], verbose: bool = False, print_space: str = "") -> None:
+    def load_image(
+        self,
+        file_path: Path,
+        meta_data: list[str] = [],
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for load_image
+        Loads image information into object
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Image path file
         :type file_path: Path
-        :param meta_data: Description
+        :param meta_data: Audio metadata for audio conversion
         :type meta_data: list[str]
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         if not self.valid_file_path(file_path):
@@ -844,18 +900,24 @@ class Sour():
             print(f"{print_space} Image Loaded.")
 
 
-    def gen_audio(self, file_path: Path, meta_data: list[str] = [], verbose: bool = False, print_space: str = "") -> None:
+    def gen_audio(
+        self,
+        file_path: Path,
+        meta_data: list[str] = [],
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for gen_audio
+        Converts image data into audio information.
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Image file path
         :type file_path: Path
-        :param meta_data: Description
+        :param meta_data: Audio metadata for audio conversion
         :type meta_data: list[str]
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         if not self.valid_image():
@@ -880,6 +942,11 @@ class Sour():
             audio = (raw_bytes.astype(np.float32) / 255.0 * 2.0) - 1.0
 
         if self.audio_channels > 1:
+            remainder = len(audio) % self.audio_channels
+            if remainder != 0:
+                pad_length = self.audio_channels - remainder
+                audio = np.pad(audio, (0, pad_length), mode='constant', constant_values=0.0)
+                    
             audio = audio.reshape(self.audio_channels, -1).T
             
         self.audio_stream = audio
@@ -888,22 +955,30 @@ class Sour():
             print(f"{print_space} Audio has been loaded from Image data.")
 
 
-    def save_audio(self, file_path: Path, meta_data: list[str] = [], file_format: str = "", save_as: str = "", verbose: bool = False, print_space: str = "") -> None:
+    def save_audio(
+        self,
+        file_path: Path,
+        meta_data: list[str] = [],
+        file_format: str = "",
+        save_as: str = "",
+        verbose: bool = False,
+        print_space: str = ""
+    ) -> None:
         '''
-        Docstring for save_audio
+        Saves audio file to path.
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Image path file
         :type file_path: Path
-        :param meta_data: Description
+        :param meta_data: Audio metadata for audio conversion
         :type meta_data: list[str]
-        :param file_format: Description
+        :param file_format: Audio output file type
         :type file_format: str
-        :param save_as: Description
+        :param save_as: Audio file path to save to
         :type save_as: str
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         if not self.valid_file_path(file_path):
@@ -936,20 +1011,20 @@ class Sour():
 
     def image_to_audio(self, file_path: str | Path, meta_data: list[str] = [], file_format: str = "", save_as: str = "", verbose: bool = False, print_space: str = "") -> None:
         '''
-        Docstring for image_to_audio
+        Full pipline for image to audio.
 
-        :param self: Description
-        :param file_path: Description
+        :param self: Object
+        :param file_path: Image file path
         :type file_path: str | Path
-        :param meta_data: Description
+        :param meta_data: Audio metadata for audio conversion
         :type meta_data: list[str]
-        :param file_format: Description
+        :param file_format: Audio file format to save to
         :type file_format: str
-        :param save_as: Description
+        :param save_as: File path to save audio too
         :type save_as: str
-        :param verbose: Description
+        :param verbose: Print information (debug/info)
         :type verbose: bool
-        :param print_space: Description
+        :param print_space: Space before verbose print outs
         :type print_space: str
         '''
         file_path = Path(file_path)
